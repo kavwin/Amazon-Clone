@@ -24,17 +24,17 @@ products.forEach((products)=>{
           </div>
 
           <div class="product-quantity-container">
-            <select>
-              <option selected value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
+            <select class="js-quantity-selector">
+              <option value="1" >1</option>
+              <option value="2" >2</option>
+              <option value="3" >3</option>
+              <option value="4" >4</option>
+              <option value="5" >5</option>
+              <option value="6" >6</option>
+              <option value="7" >7</option>
+              <option value="8" >8</option>
+              <option value="9" >9</option>
+              <option value="10" >10</option>
             </select>
           </div>
 
@@ -55,8 +55,12 @@ products.forEach((products)=>{
 
 document.querySelector(".js-product-grid").innerHTML=productsHtml;
 
-document.querySelectorAll(".js-addtocartBtn").forEach((button)=>{
+document.querySelectorAll(".js-addtocartBtn").forEach((button, index)=>{
     button.addEventListener("click", ()=>{
+
+        let quantitySelector=document.querySelectorAll(".js-quantity-selector");
+        let selectedvalue=quantitySelector[index];
+        let selectedQuantity=Number(selectedvalue.value);
         
         let productId=button.dataset.productId;
         let matchingItem;
@@ -66,12 +70,13 @@ document.querySelectorAll(".js-addtocartBtn").forEach((button)=>{
                 matchingItem=item;
             }
         });
+
         if(matchingItem){
-            matchingItem.quantity+=1;
+            matchingItem.quantity+=selectedQuantity;
         }else{
             cart.push({
                 productId:productId,
-                quantity:1
+                quantity:selectedQuantity
             });
 
         }
