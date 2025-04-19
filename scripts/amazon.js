@@ -24,7 +24,7 @@ products.forEach((products)=>{
           </div>
 
           <div class="product-quantity-container">
-            <select class="js-quantity-selector">
+            <select class="js-quantity-selector js-quantity-selector-${products.id}">
               <option value="1" >1</option>
               <option value="2" >2</option>
               <option value="3" >3</option>
@@ -40,7 +40,7 @@ products.forEach((products)=>{
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart" >
+          <div class="added-to-cart js-added-to-cart-${products.id}" >
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -51,41 +51,61 @@ products.forEach((products)=>{
         </div>
     `;
 
-})
+});
+const addedMessageTimeouts = {};
 
 document.querySelector(".js-product-grid").innerHTML=productsHtml;
 
-document.querySelectorAll(".js-addtocartBtn").forEach((button, index)=>{
+document.querySelectorAll(".js-addtocartBtn").forEach((button)=>{
     button.addEventListener("click", ()=>{
-
-        let quantitySelector=document.querySelectorAll(".js-quantity-selector");
-        let selectedvalue=quantitySelector[index];
-        let selectedQuantity=Number(selectedvalue.value);
         
-        let productId=button.dataset.productId;
-        let matchingItem;
+        //cart updating code
+            // const productId=button.dataset.productId; below is destructuring shortcut syntax
+            const {productId}=button.dataset;
 
-        cart.forEach((item)=>{
-            if(productId==item.productId){
-                matchingItem=item;
-            }
-        });
+            const quantitySelector=document.querySelector(`.js-quantity-selector-${productId}`);
+            const quantity=Number(quantitySelector.value);
 
-        if(matchingItem){
-            matchingItem.quantity+=selectedQuantity;
-        }else{
-            cart.push({
-                productId:productId,
-                quantity:selectedQuantity
+            let matchingItem;
+
+            cart.forEach((item)=>{
+                if(productId==item.productId){
+                    matchingItem=item;
+                }
             });
 
-        }
-        let cartQuantity=0;
-        cart.forEach((item)=>{
-            cartQuantity+=item.quantity;
-            document.querySelector(".js-cart-quantity").innerHTML=cartQuantity;
+            if(matchingItem){
+                matchingItem.quantity+=quantity;
+            }else{
+                cart.push({
+                    productId,
+                    quantity
+                });
 
-        })
+            }
+            let cartQuantity=0;
+            cart.forEach((item)=>{
+                cartQuantity+=item.quantity;
+                document.querySelector(".js-cart-quantity").innerHTML=cartQuantity;
+
+            })
+
+        //"Added" text message code
+            let added=document.querySelector(`.js-added-to-cart-${productId}`);
+            added.classList.add("added-msg");
+
+            const previousTimeoutId = addedMessageTimeouts[productId]; 
+            if (previousTimeoutId) {
+                clearTimeout(previousTimeoutId);
+            }
+        
+            const timeoutId = setTimeout(() => {
+                added.classList.remove("added-msg");
+            }, 2000);
+
+            addedMessageTimeouts[productId] = timeoutId;
+        
+        
     })
 })
 

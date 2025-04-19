@@ -46,6 +46,21 @@ const products = [
     sizeChartLink: "images/clothing-size-chart.png"
   },
   {
+    id: "id4",
+    image: "https://m.media-amazon.com/images/I/614hWI0OETL._SX679_.jpg",
+    name: "Sony PS5® Console Video Game Disc - Fortnite Bundle (Slim)",
+    rating: {
+      stars: 5,
+      count: 5197
+    },
+    priceCents: 9899,
+    keywords: [
+      "gaming",
+      "console",
+      "ps5"
+    ]
+  },
+  {
     id: "54e0eccd-8f36-462b-b68a-8182611d9add",
     image: "images/products/black-2-slot-toaster.jpg",
     name: "2 Slot Toaster - Black",
