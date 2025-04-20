@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 
 let productsHtml="";
@@ -59,56 +59,37 @@ const addedMessageTimeouts = {};
 
 document.querySelector(".js-product-grid").innerHTML=productsHtml;
 
+
+function updateCartQuantity(){
+  let cartQuantity=0;
+  cart.forEach((cartItem)=>{
+    cartQuantity+=cartItem.quantity;
+    document.querySelector(".js-cart-quantity").innerHTML=cartQuantity;
+  });
+}
+function addedMessage(productId){
+  let added=document.querySelector(`.js-added-to-cart-${productId}`);
+    added.classList.add("added-msg");
+
+    const previousTimeoutId = addedMessageTimeouts[productId]; 
+    if (previousTimeoutId) {
+      clearTimeout(previousTimeoutId);
+    }
+    const timeoutId = setTimeout(() => {
+      added.classList.remove("added-msg");
+    }, 2000);
+    addedMessageTimeouts[productId] = timeoutId;
+
+}
 document.querySelectorAll(".js-addtocartBtn").forEach((button)=>{
     button.addEventListener("click", ()=>{
         
-        //cart updating code
-            // const productId=button.dataset.productId; below is destructuring shortcut syntax
-            const {productId}=button.dataset;
+      // const productId=button.dataset.productId; below is destructuring shortcut syntax
+      const {productId}=button.dataset;
 
-            const quantitySelector=document.querySelector(`.js-quantity-selector-${productId}`);
-            const quantity=Number(quantitySelector.value);
-
-            let matchingItem;
-
-            cart.forEach((item)=>{
-                if(productId==item.productId){
-                    matchingItem=item;
-                }
-            });
-
-            if(matchingItem){
-                matchingItem.quantity+=quantity;
-            }else{
-                cart.push({
-                    productId,
-                    quantity
-                });
-
-            }
-            let cartQuantity=0;
-            cart.forEach((item)=>{
-                cartQuantity+=item.quantity;
-                document.querySelector(".js-cart-quantity").innerHTML=cartQuantity;
-
-            })
-
-        //"Added" text message code
-            let added=document.querySelector(`.js-added-to-cart-${productId}`);
-            added.classList.add("added-msg");
-
-            const previousTimeoutId = addedMessageTimeouts[productId]; 
-            if (previousTimeoutId) {
-                clearTimeout(previousTimeoutId);
-            }
-        
-            const timeoutId = setTimeout(() => {
-                added.classList.remove("added-msg");
-            }, 2000);
-
-            addedMessageTimeouts[productId] = timeoutId;
-        
-        
+      addToCart(productId);
+      updateCartQuantity();
+      addedMessage(productId);
     })
 })
 
