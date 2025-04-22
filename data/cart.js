@@ -48,3 +48,19 @@ export function removeFromCart(productId){
   saveToLocalStorage();
 }
 
+export function calculateCartQuantity(){
+  let cartQuantity=0;
+  cart.forEach((cartItem)=>{
+    cartQuantity+=cartItem.quantity;
+  });
+  let amazonCartQuantity=document.querySelector(".js-cart-quantity");
+  if(amazonCartQuantity){ 
+    amazonCartQuantity.innerHTML=`${cartQuantity}`;
+  }
+  let checkoutCartQuantity=document.querySelector(".js-checkoutCart-quantity");
+  if(checkoutCartQuantity){
+    checkoutCartQuantity.innerHTML=`${cartQuantity} Items`
+  };
+
+}
+

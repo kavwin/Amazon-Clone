@@ -1,4 +1,4 @@
-import {cart, removeFromCart} from '../data/cart.js';
+import {cart, removeFromCart, calculateCartQuantity} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 
@@ -6,6 +6,7 @@ import {formatCurrency} from './utils/money.js';
 let cartSummaryHTML="";
 
 cart.forEach((cartItems)=>{
+
     const productId=cartItems.productId
     let matchingProduct;
     products.forEach((productsItem)=>{
@@ -96,8 +97,10 @@ cart.forEach((cartItems)=>{
        
     `;
 });
-
 document.querySelector(".js-order-summary").innerHTML=cartSummaryHTML;
+
+calculateCartQuantity();
+
 
 document.querySelectorAll(".js-delete-link").forEach((deleteLink)=>{
     deleteLink.addEventListener('click',()=>{
@@ -108,6 +111,8 @@ document.querySelectorAll(".js-delete-link").forEach((deleteLink)=>{
         let cartItemContainer=document.querySelector(`.js-cart-item-container-${productId}`);
         cartItemContainer.remove();
 
-
+        calculateCartQuantity();
+       
     });
 });
+
