@@ -64,3 +64,15 @@ export function calculateCartQuantity(){
 
 }
 
+export function updateCartQuantity(productId, newQuantity){
+
+  cart.forEach((cartItem)=>{
+    if(cartItem.productId === productId){
+      cartItem.quantity=newQuantity;
+    }
+  });
+  saveToLocalStorage();
+  calculateCartQuantity();
+  
+}
+
