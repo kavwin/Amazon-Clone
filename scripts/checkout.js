@@ -1,4 +1,4 @@
-import {cart, removeFromCart, calculateCartQuantity, updateCartQuantity} from '../data/cart.js';
+import {cart, removeFromCart, calculateCartQuantity, updateCartQuantity, updateDeliveryOptionId} from '../data/cart.js';
 import {products} from '../data/products.js';
 import formatCurrency from './utils/money.js';
 import dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
@@ -65,7 +65,7 @@ cart.forEach((cartItems)=>{
                 </div>
                 </div>
 
-                <div class="delivery-options js-delivery-options">
+                <div class="delivery-options ">
                     <div class="delivery-options-title">
                         Choose a delivery option:
                     </div>
@@ -95,19 +95,25 @@ function deliveryOptionsGenerator(matchingProduct, cartItems){
        
         deliveryHtml+=
         `
-            <div class="delivery-option">
+            <div class="delivery-option js-deliver-option"
+                data-product-id="${matchingProduct.id}"
+                data-delivery-option-id="${deliveryOptions.id}"
+            >
                 <input type="radio" 
                 ${isChecked ? "checked":""}
                 class="delivery-option-input"
                 name="delivery-option-${matchingProduct.id}">
             <div>
-            <div class="delivery-option-date">
+            <div class="delivery-option-date js-delivery-option-date">
                 ${deliveryDateFormat}
             </div>
+            
             <div class="delivery-option-price">
                 ${priceString} Shipping
             </div>
+            
             </div>
+            
             </div> 
         `;
  });
@@ -172,6 +178,22 @@ document.querySelectorAll(".save-quantity-link").forEach((saveLink)=>{
         
     });
 });
+
+document.querySelectorAll('.js-deliver-option').
+forEach((element)=>{
+    element.addEventListener('click',()=>{
+
+        const{productId, deliveryOptionId}=element.dataset
+        updateDeliveryOptionId(productId, deliveryOptionId);
+        
+        let updatedDeliveryOption=element.querySelector('.js-delivery-option-date').textContent;
+        let parentEleOfCartHtml=element.closest(`.js-cart-item-container-${productId}`);
+        parentEleOfCartHtml.querySelector(".js-delivery-date").innerHTML=updatedDeliveryOption;
+
+        
+    })
+
+})
 
 
 
