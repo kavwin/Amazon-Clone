@@ -6,7 +6,8 @@ import {deliveryOptions} from '../data/deliveryOption.js';
 
 
 
-let cartSummaryHTML="";
+function renderCartSummary(){
+    let cartSummaryHTML="";
 
 cart.forEach((cartItems)=>{
 
@@ -34,7 +35,7 @@ cart.forEach((cartItems)=>{
     `
         <div class="cart-item-container js-cart-item-container-${matchingProduct.id}" data-cartProduct-id-${matchingProduct.id} >
             <div class="delivery-date js-delivery-date">
-                ${deliveryDateFormat}
+                Delivery date: ${deliveryDateFormat}
             </div>
 
             <div class="cart-item-details-grid">
@@ -186,14 +187,18 @@ forEach((element)=>{
         const{productId, deliveryOptionId}=element.dataset
         updateDeliveryOptionId(productId, deliveryOptionId);
         
-        let updatedDeliveryOption=element.querySelector('.js-delivery-option-date').textContent;
-        let parentEleOfCartHtml=element.closest(`.js-cart-item-container-${productId}`);
-        parentEleOfCartHtml.querySelector(".js-delivery-date").innerHTML=updatedDeliveryOption;
+        // let updatedDeliveryOption=element.querySelector('.js-delivery-option-date').textContent;
+        // let parentEleOfCartHtml=element.closest(`.js-cart-item-container-${productId}`);
+        // parentEleOfCartHtml.querySelector(".js-delivery-date").innerHTML=updatedDeliveryOption;
 
-        
+        renderCartSummary();
     })
 
 })
+
+}
+renderCartSummary();
+
 
 
 
