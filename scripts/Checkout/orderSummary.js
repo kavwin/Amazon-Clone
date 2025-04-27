@@ -7,6 +7,7 @@ import {renderPaymentSummary} from './paymentSummary.js';
 
 
 
+
 export function renderOrderSummary(){
     let cartSummaryHTML="";
 
@@ -130,10 +131,7 @@ document.querySelectorAll(".js-delete-link").forEach((deleteLink)=>{
         const productId=deleteLink.dataset.productId;
 
         removeFromCart(productId);
-
-        let cartItemContainer=document.querySelector(`.js-cart-item-container-${productId}`);
-        cartItemContainer.remove();
-
+        renderOrderSummary();
         calculateCartQuantity();
         renderPaymentSummary();
        

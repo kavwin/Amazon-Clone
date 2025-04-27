@@ -1,3 +1,5 @@
+import {renderCheckoutHeaderQuantity} from '../scripts/Checkout/checkoutHeader.js';
+
 export let cart= JSON.parse(localStorage.getItem("cart"));
 if(!cart){
   cart=[{
@@ -61,10 +63,7 @@ export function calculateCartQuantity(){
   if(amazonCartQuantity){ 
     amazonCartQuantity.innerHTML=`${cartQuantity}`;
   }
-  let checkoutCartQuantity=document.querySelector(".js-checkoutCart-quantity");
-  if(checkoutCartQuantity){
-    checkoutCartQuantity.innerHTML=`${cartQuantity} Items`
-  };
+  renderCheckoutHeaderQuantity(cartQuantity);
 
 }
 
