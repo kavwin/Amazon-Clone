@@ -17,8 +17,18 @@ export const deliveryOptions=[{
 export function calculateDeliveryDate(matchedDeliveryOptionId){
 
     const today=dayjs();
-    const deliveryDate=today.add(matchedDeliveryOptionId.deliveryDays, 'days');
-    const deliveryDateFormat=deliveryDate.format("dddd, MMMM D");
-    return deliveryDateFormat
+    let x=0;
+    let i=0;
 
-};
+    while(i<matchedDeliveryOptionId.deliveryDays){
+            const dayCheck=today.add(x, 'days').day();
+            if(dayCheck !==0 && dayCheck !==6){
+                i++;
+            }
+            x++;
+        }
+
+
+    let deliveryDate=today.add(x, 'days');
+    return deliveryDate.format("dddd, MMMM D");
+}

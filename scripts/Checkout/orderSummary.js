@@ -26,7 +26,7 @@ export function renderOrderSummary(){
                 matchedDeliveryOptionId=deliveryOptions;
             }
         });
-
+        
         cartSummaryHTML+= 
         `
             <div class="cart-item-container js-cart-item-container-${matchingProduct.id}" data-cartProduct-id-${matchingProduct.id} >
@@ -128,7 +128,6 @@ export function renderOrderSummary(){
         
         });
     });
-
 
     document.querySelectorAll(".js-update-link").forEach((updateLink)=>{
         updateLink.addEventListener('click',()=>{

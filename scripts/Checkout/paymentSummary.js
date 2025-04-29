@@ -13,7 +13,6 @@ export function renderPaymentSummary(){
     let totalBeforeTax=0, tax=0, final=0;
 
     cart.forEach((element) => {
-        console.log(element);
 
         let productQuantity=element.quantity;
         let productId=element.productId;
@@ -23,7 +22,7 @@ export function renderPaymentSummary(){
 
         products.forEach((products)=>{
             if(products.id===productId){
-                productsPrice+=Number(formatCurrency((products.priceCents)*productQuantity));    
+                productsPrice+=Number(formatCurrency(products.priceCents *productQuantity));    
             }
         });
 
@@ -37,7 +36,6 @@ export function renderPaymentSummary(){
         totalBeforeTax=productsPrice+deliveryPrice;
         tax=Number((totalBeforeTax/10).toFixed(2));
         final=Number((totalBeforeTax+tax).toFixed(2));
-        console.log(itemsInCart);
     });
 
   paymentSummaryHtml=
@@ -47,7 +45,7 @@ export function renderPaymentSummary(){
                 </div>
                 <div class="payment-summary-row">
                     <div>Items (${itemsInCart}):</div>
-                    <div class="payment-summary-money">$${productsPrice}</div>
+                    <div class="payment-summary-money">$${productsPrice.toFixed(2)}</div>
                 </div>
 
                 <div class="payment-summary-row">
@@ -57,7 +55,7 @@ export function renderPaymentSummary(){
 
                 <div class="payment-summary-row subtotal-row">
                     <div>Total before tax:</div>
-                    <div class="payment-summary-money">$${totalBeforeTax}</div>
+                    <div class="payment-summary-money">$${totalBeforeTax.toFixed(2)}</div>
                 </div>
 
                 <div class="payment-summary-row">
