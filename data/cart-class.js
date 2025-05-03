@@ -1,12 +1,17 @@
 import {renderCheckoutHeaderQuantity} from '../scripts/Checkout/checkoutHeader.js';
 
-function Cart(localstoragekey){
+class Cart{
+    cartItems;
+    localStorageKey;
 
-    const cart={
-    cartItems: undefined,
+    constructor(localStorageKey){
+        this.localStorageKey=localStorageKey;       
+        this.loadFromStorage();
+
+    }
 
     loadFromStorage(){
-        this.cartItems= JSON.parse(localStorage.getItem("localstoragekey"));
+        this.cartItems= JSON.parse(localStorage.getItem(this.localstoragekey));
 
         if(!this.cartItems){
             this.cartItems=[{
@@ -20,12 +25,10 @@ function Cart(localstoragekey){
                 deliveryOptionId:"2"
             }];
         }
-    },
-
+    }
     saveToLocalStorage(){
-        localStorage.setItem(localstoragekey, JSON.stringify(this.cartItems));
-    },
-
+        localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    }
     addToCart(productId){
         const quantitySelector=document.querySelector(`.js-quantity-selector-${productId}`);
         const quantity=Number(quantitySelector.value);
@@ -49,7 +52,7 @@ function Cart(localstoragekey){
         }
 
         this.saveToLocalStorage()
-    },
+    }
 
     removeFromCart(productId){
         const newCartArray=[];
@@ -63,8 +66,7 @@ function Cart(localstoragekey){
         this.cartItems=newCartArray;
 
         this.saveToLocalStorage();
-    },
-
+    }
     calculateCartQuantity(){
         let cartQuantity=0;
         this.cartItems.forEach((cartItem)=>{
@@ -75,7 +77,7 @@ function Cart(localstoragekey){
           amazonCartQuantity.innerHTML=`${cartQuantity}`;
         }
         renderCheckoutHeaderQuantity(cartQuantity);
-    },
+    }
 
     updateCartQuantity(productId, newQuantity){
 
@@ -88,7 +90,7 @@ function Cart(localstoragekey){
         this.saveToLocalStorage();
 
         this.calculateCartQuantity();
-    },
+    }
 
     updateDeliveryOptionId(productId, deliveryOptionId){
         let matchingItem;
@@ -103,17 +105,9 @@ function Cart(localstoragekey){
         this.saveToLocalStorage();
     }
 
-    };
-    return cart;
 }
-
-const cart=Cart("cart-oop");
-const businesscart=Cart("businessCart-oop");
-
-
-cart.loadFromStorage();
-businesscart.loadFromStorage();
-
+const cart=new Cart("cart");
+const businesscart= new Cart("businessCart");
 
 console.log(cart);
 console.log(businesscart);
