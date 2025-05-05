@@ -1,4 +1,5 @@
-import {cart, removeFromCart, calculateCartQuantity, updateCartQuantity, updateDeliveryOptionId} from '../../data/cart.js';
+// import {cart, removeFromCart, calculateCartQuantity, updateCartQuantity, updateDeliveryOptionId} from '../../data/cart.js';
+import cart from '../../data/cart-class.js';
 import {products} from '../../data/products.js';
 import formatCurrency from '../utils/money.js';
 import {deliveryOptions, calculateDeliveryDate} from '../../data/deliveryOption.js';
@@ -8,7 +9,7 @@ import {renderPaymentSummary} from './paymentSummary.js';
 export function renderOrderSummary(){
     let cartSummaryHTML="";
 
-    cart.forEach((cartItems)=>{
+    cart.cartItems.forEach((cartItems)=>{
 
         const productId=cartItems.productId
         let matchingProduct;
@@ -115,7 +116,7 @@ export function renderOrderSummary(){
         return deliveryHtml;
     }
 
-    calculateCartQuantity();
+    cart.calculateCartQuantity();
 
     document.querySelectorAll(".js-delete-link").forEach((deleteLink)=>{
         deleteLink.addEventListener('click',()=>{

@@ -88,7 +88,3 @@ document.querySelectorAll(".js-addtocartBtn").forEach((button)=>{
       addedMessage(productId);
     })
 })
-
-
-
-

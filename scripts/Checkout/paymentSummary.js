@@ -1,4 +1,4 @@
-import {cart} from '../../data/cart.js';
+import cart from '../../data/cart-class.js';
 import {products} from '../../data/products.js';
 import formatCurrency from '../utils/money.js';
 import {deliveryOptions} from '../../data/deliveryOption.js';
@@ -12,7 +12,7 @@ export function renderPaymentSummary(){
 
     let totalBeforeTax=0, tax=0, final=0;
 
-    cart.forEach((element) => {
+    cart.cartItems.forEach((element) => {
 
         let productQuantity=element.quantity;
         let productId=element.productId;
