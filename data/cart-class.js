@@ -1,6 +1,6 @@
 import {renderCheckoutHeaderQuantity} from '../scripts/Checkout/checkoutHeader.js';
 
-class Cart{
+export class Cart{
     cartItems;
     #localStorageKey;
 
@@ -106,8 +106,5 @@ class Cart{
     }
 
 }
-const cart=new Cart("cart");
-const businesscart= new Cart("businessCart");
-
-console.log(cart);
-console.log(businesscart);
+export const cart=new Cart("cart");
+export default cart;

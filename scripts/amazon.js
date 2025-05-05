@@ -1,6 +1,5 @@
-import {cart, addToCart, calculateCartQuantity} from '../data/cart.js';
+import cart from '../data/cart-class.js';
 import {products} from '../data/products.js';
-import {formatCurrency} from './utils/money.js';
 
 let productsHtml="";
 products.forEach((products)=>{
@@ -62,7 +61,7 @@ const addedMessageTimeouts = {};
 
 document.querySelector(".js-product-grid").innerHTML=productsHtml;
 
-calculateCartQuantity();
+cart.calculateCartQuantity();
 
 function addedMessage(productId){
   let added=document.querySelector(`.js-added-to-cart-${productId}`);
@@ -84,8 +83,8 @@ document.querySelectorAll(".js-addtocartBtn").forEach((button)=>{
       // const productId=button.dataset.productId; below is destructuring shortcut syntax
       const {productId}=button.dataset;
 
-      addToCart(productId);
-      calculateCartQuantity();
+      cart.addToCart(productId);
+      cart.calculateCartQuantity();
       addedMessage(productId);
     })
 })
