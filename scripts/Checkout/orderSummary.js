@@ -162,7 +162,7 @@ export function renderOrderSummary(){
 
                 cartItemContainer.querySelector(".js-quantity-label").innerHTML=updatedCartValue;
 
-                updateCartQuantity(productId,updatedCartValue);
+                cart.updateCartQuantity(productId,updatedCartValue);
 
                 cartItemContainer.classList.remove("is-editing-quantity");
             }else{
@@ -176,7 +176,7 @@ export function renderOrderSummary(){
             element.addEventListener('click',()=>{
 
                 const{productId, deliveryOptionId}=element.dataset
-                updateDeliveryOptionId(productId, deliveryOptionId);
+                cart.updateDeliveryOptionId(productId, deliveryOptionId);
                 
                 // let updatedDeliveryOption=element.querySelector('.js-delivery-option-date').textContent;
                 // let parentEleOfCartHtml=element.closest(`.js-cart-item-container-${productId}`);
