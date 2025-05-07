@@ -64,6 +64,22 @@ class Appliance extends Product{
   }
 }
 
+
+function loadProducts(){
+
+  let products=[];
+  const xhr=new XMLHttpRequest();
+
+  // xhr.addEventListener('load', ()=>{
+
+    console.log(xhr.response);
+  })
+
+
+}
+loadProducts();
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -759,3 +775,4 @@ export const products = [
   }
   return new Product(productDetails);
 });
+*/
